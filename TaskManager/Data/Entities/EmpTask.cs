@@ -7,6 +7,10 @@ namespace TaskManager.Data.Entities
 
         // Assigned employee
         public string IdentityUserId { get; set; }
-        public Microsoft.AspNetCore.Identity.IdentityUser user { get; set; }
+        public Microsoft.AspNetCore.Identity.IdentityUser User { get; set; }
+
+        // Task's status
+        public StatusEnum StatusId { get; set; }
+        public Status Status { get; set; }
     }
 }
