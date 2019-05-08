@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.Data.Entities;
 
 namespace TaskManager.Data
 {
@@ -12,5 +11,9 @@ namespace TaskManager.Data
             : base(options)
         {
         }
+
+        DbSet<EmpTask> tasks { get; set; }
+        DbSet<Comment> comments { get; set; }
+        DbSet<Status> statuses { get; set; }
     }
 }

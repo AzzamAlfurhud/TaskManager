@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace TaskManager.Models
+namespace TaskManager.Data.Entities
 {
     public abstract class BaseEntity
     {
-        public string ID { get; set; }
+        public string Id { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
 
         public BaseEntity()
         {
-            ID = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
             CreatedAt = DateTime.Now;
         }
     }
