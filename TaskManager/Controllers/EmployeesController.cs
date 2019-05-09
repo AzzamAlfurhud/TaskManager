@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using TaskManager.Models;
 
 namespace TaskManager.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class EmployeesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -39,23 +41,6 @@ namespace TaskManager.Controllers
             return employeeModels;
         }
 
-        // GET: Employees/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(MapToEmployeeModel(user));
-        }
-
         private EmployeeModel MapToEmployeeModel(IdentityUser user)
         {
             EmployeeModel model = new EmployeeModel
@@ -65,42 +50,6 @@ namespace TaskManager.Controllers
                 Email = user.Email
             };
             return model;
-        }
-
-        // POST: Employees/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,Email,Password,role")] EmployeeModel employeeModel)
-        {
-            if (id != employeeModel.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    IdentityUser user = (IdentityUser)Mapper.MapToEntity(employeeModel,Mapper.USER);
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EmployeeModelExists(employeeModel.UserName))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(employeeModel);
         }
 
         // GET: Employees/Delete/5

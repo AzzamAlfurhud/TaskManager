@@ -1,0 +1,58 @@
+﻿@model TaskManager.Models.TaskModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>TaskModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                @if (User.IsInRole("Manager"))
+                {
+                    <input asp-for="Name" class="form-control" />
+                }
+                else
+                {
+                    <input asp-for="Name" class="form-control" readonly />
+                }
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            @if (ViewData["TaskStatus"].ToString().Equals(TaskManager.Data.Entities.StatusEnum.InProgress.ToString())
+               && Model.IdentityUserId.Equals(ViewData["LoggedInUser"].ToString()))
+            {
+                <div class="form-group">
+                    <label asp-for="CheckFinish" class="control-label">Confirm finishing the task</label>
+                    <input type="checkbox" asp-for="CheckFinish" class="checkbox-inline" />
+                </div>
+            }
+            @if (ViewData["TaskStatus"].ToString().Equals(TaskManager.Data.Entities.StatusEnum.Pending.ToString())
+            && User.IsInRole("Manager"))
+            {
+                <div class="form-group">
+                    <label asp-for="CheckComplete" class="control-label">Confirm completing the task</label>
+                    <input type="checkbox" asp-for="CheckComplete" class="checkbox-inline" />
+                </div>
+            }
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="IdentityUserId" />
+
+            <button type="submit" class="btn btn-sm btn-primary u-btn-primary transition-3d-hover">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

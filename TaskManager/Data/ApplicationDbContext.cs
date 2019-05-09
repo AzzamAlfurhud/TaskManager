@@ -13,8 +13,8 @@ namespace TaskManager.Data
         {
         }
 
-        DbSet<EmpTask> tasks { get; set; }
-        DbSet<Comment> comments { get; set; }
-        DbSet<Status> statuses { get; set; }
+        public DbSet<EmpTask> tasks { get; set; }
+        public DbSet<Comment> comments { get; set; }
+        public DbSet<Status> statuses { get; set; }
     }
 }
