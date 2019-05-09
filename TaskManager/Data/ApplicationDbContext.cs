@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Data.Entities;
+using TaskManager.Models;
 
 namespace TaskManager.Data
 {

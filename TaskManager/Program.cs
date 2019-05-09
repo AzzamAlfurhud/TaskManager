@@ -26,9 +26,8 @@ namespace TaskManager
                 }
                 catch (Exception exception)
                 {
-                    throw new Exception();
-                    //var logger = services.GetRequiredService<ILogger<Program>>();
-                    //logger.LogError(exception, "An error occurred while creating roles");
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(exception, "An error occurred while creating roles");
                 }
             }
             host.Run();
